@@ -14,6 +14,8 @@ The possible letters are 'L', 'R' and 'M'. 'L' and 'R' makes the rover spin 90 d
 
 Assumes that the square directly North from (x, y) is (x, y+1). 
 
+**NOTE:**
+This assumes that once you move a rover off the grid, the rover stops and doesnt move back. We stop processing the rover at that time. 
 
 Usage
 -----
@@ -56,7 +58,7 @@ To run the rspec tests, run the following
 $ bundle exec rake
 ```
 
-**NOTE:** This has been tested with ruby 2.1.1 and 2.0.0\n 
+**NOTE:** This has been tested with ruby 2.1.1 and 2.0.0
 
 Should work with ruby version > 1.9. Just run with your preferred ruby version as follows
 ```
