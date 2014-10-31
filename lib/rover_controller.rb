@@ -46,13 +46,13 @@ module MarsRover
           control_commands.each_char do |c|
             case c.upcase
             when 'L'
-              logger.debug("Turning left from #{rover.get_orientation}")
+              logger.debug {"Turning left from #{rover.get_orientation}"}
               rover.turn_left
             when 'M'
-              logger.debug("Moving 1 step #{rover.get_orientation} from #{rover.get_current_position}")
+              logger.debug {"Moving 1 step #{rover.get_orientation} from #{rover.get_current_position}"}
               rover.move
             when 'R'
-              logger.debug("Turning right from #{rover.get_orientation}")
+              logger.debug {"Turning right from #{rover.get_orientation}"}
               rover.turn_right
             else 
               puts "invalid code"
