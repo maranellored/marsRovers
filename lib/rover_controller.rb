@@ -15,7 +15,7 @@ module MarsRover
     PLATEAU_BOTTOM_X = 0
     PLATEAU_BOTTOM_Y = 0
 
-    def self.control(input_list) 
+    def self.control(logger, input_list) 
 
       raise ArgumentError, "No input given!" if input_list.empty?
 
@@ -46,28 +46,31 @@ module MarsRover
           control_commands.each_char do |c|
             case c.upcase
             when 'L'
+              logger.debug("Turning left from #{rover.get_orientation}")
               rover.turn_left
             when 'M'
-                rover.move
+              logger.debug("Moving 1 step #{rover.get_orientation} from #{rover.get_current_position}")
+              rover.move
             when 'R'
+              logger.debug("Turning right from #{rover.get_orientation}")
               rover.turn_right
             else 
               puts "invalid code"
             end
           end
         rescue RuntimeError => e
-          puts "ERROR - Rover is off the plateau. Moving to next rover. Error msg: #{e.message}"
+          logger.error "Rover is off the plateau. Moving to next rover. Error msg: #{e.message}"
           next
         end
 
-        print_rover_position rover
+        print_rover_position(logger, rover)
       end
 
     end
 
-    def self.print_rover_position(rover)
+    def self.print_rover_position(logger, rover)
       x_pos, y_pos = rover.get_current_position
-      puts "#{x_pos} #{y_pos} " + rover.get_orientation
+      logger.info("#{x_pos} #{y_pos} " + rover.get_orientation)
     end
 
     # Helper method to help retrieve the co-ordinates from a string.

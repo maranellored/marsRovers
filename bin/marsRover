@@ -3,6 +3,7 @@
 $:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'optparse'
 require 'rover_controller'
+require 'logger'
 
 def run()
   options = {}
@@ -26,9 +27,22 @@ def run()
       puts opts
       exit
     end
+
+    options[:debug] = false
+    opts.on('-d', '--debug', 'Indicate if you need debug output') do
+      options[:debug] = true
+    end
   end
 
   opt_parser.parse!
+
+  # Setup logging. Only print message for now but can be extended to 
+  # print other information. Logs go to STDOUT
+  logger = Logger.new(STDOUT)
+  logger.level = options[:debug]? Logger::DEBUG : Logger::INFO
+  logger.formatter = proc do |severity, datetime, progname, msg|
+    "#{msg}\n"
+  end
 
   # parse input from stdin
   # stop when you see a blank line
@@ -40,9 +54,9 @@ def run()
   end
 
   begin
-    MarsRover::RoverController.control(input_list)
+    MarsRover::RoverController.control(logger, input_list)
   rescue ArgumentError => e
-    puts "ERROR - #{e.message}"
+    logger.error "#{e.message}"
   end
 end
 
