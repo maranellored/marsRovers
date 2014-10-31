@@ -55,7 +55,7 @@ module MarsRover
               logger.debug {"Turning right from #{rover.get_orientation}"}
               rover.turn_right
             else 
-              puts "invalid code"
+              logger.error "invalid code"
             end
           end
         rescue RuntimeError => e
