@@ -4,6 +4,7 @@
 ##
 ###############################################################################
 
+require 'spec_helper'
 require 'rover_controller'
 require 'rover'
 

@@ -14,8 +14,19 @@ The possible letters are 'L', 'R' and 'M'. 'L' and 'R' makes the rover spin 90 d
 
 Assumes that the square directly North from (x, y) is (x, y+1). 
 
+This code has been tested with Ruby 2.1.1
+
 Usage
 -----
+Pre-requisites: 
+
+Install [bundler](http://bundler.io) and then run the following
+```
+$ gem install bundler
+$ git clone 
+$ cd marsRover
+$ bundle install
+```
 
 To use, run the following.
 ```

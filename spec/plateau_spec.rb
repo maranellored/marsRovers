@@ -4,6 +4,7 @@
 ##
 ###############################################################################
 
+require 'spec_helper'
 require 'plateau'
 
 describe MarsRover::Plateau do
