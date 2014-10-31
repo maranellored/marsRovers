@@ -11,6 +11,7 @@
 ##  The constructor to this class makes use of the MarsRover::Plateau class
 ##  which is used to validate the position of the rover, relative to the
 ##  plateau which it is exploring
+##
 ###############################################################################
 
 module MarsRover
@@ -39,22 +40,26 @@ module MarsRover
     # The move is determined based on the current orientation. 
     # The distance to move defaults to 1 but can be passed in by the user
     # Calls the internal helper methods to move the rover based on orientation
+    #
+    # Validates the rover position after every move. 
+    # If the rover is in a invalid position, we assume that the rover is broken
+    # and will ignore the rest of the commands for it.
     def move(distance=1)
       case @current_orientation
       when NORTH
         move_north(distance)
-        raise RuntimeError, "Invalid move! Off the grid" unless @plateau.validate_position(*get_current_position)
+        raise RuntimeError, "Invalid move! Off the grid at #{get_current_position}" unless @plateau.validate_position(*get_current_position)
       when SOUTH
         move_south(distance)
-        raise RuntimeError, "Invalid move! Off the grid" unless @plateau.validate_position(*get_current_position)
+        raise RuntimeError, "Invalid move! Off the grid at #{get_current_position}" unless @plateau.validate_position(*get_current_position)
       when EAST
         move_east(distance)
-        raise RuntimeError, "Invalid move! Off the grid" unless @plateau.validate_position(*get_current_position)
+        raise RuntimeError, "Invalid move! Off the grid at #{get_current_position}" unless @plateau.validate_position(*get_current_position)
       when WEST
         move_west(distance)
-        raise RuntimeError, "Invalid move! Off the grid" unless @plateau.validate_position(*get_current_position)
+        raise RuntimeError, "Invalid move! Off the grid at #{get_current_position}" unless @plateau.validate_position(*get_current_position)
       else
-        raise RuntimeError, 'Current Orientation is invalid'
+        raise RuntimeError, "Current Orientation is invalid - #{get_orientation}"
       end
     end
 
@@ -71,7 +76,7 @@ module MarsRover
       when WEST
         @current_orientation = SOUTH
       else
-        raise RuntimeError, 'Current Orientation is invalid'
+        raise RuntimeError, "Current Orientation is invalid - #{get_orientation}"
       end
     end
 
@@ -88,7 +93,7 @@ module MarsRover
       when WEST
         @current_orientation = NORTH
       else
-        raise RuntimeError, 'Current Orientation is invalid'
+        raise RuntimeError, "Current Orientation is invalid - #{get_orientation}"
       end
     end
 

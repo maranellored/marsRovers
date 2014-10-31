@@ -12,12 +12,18 @@ module MarsRover
 
   class RoverController
 
+    PLATEAU_BOTTOM_X = 0
+    PLATEAU_BOTTOM_Y = 0
+
     def self.control(input_list) 
+
+      raise ArgumentError, "No input given!" if input_list.empty?
+
       # the first element in the list is the co-ordinates 
       # of the top left corner of the plateau
       plateau_max_x, plateau_max_y = parse_coordinates_from_string(input_list.shift)
       # hard code the bottom left corner to 0, 0
-      plateau = Plateau.new(0, 0, plateau_max_x, plateau_max_y)
+      plateau = Plateau.new(PLATEAU_BOTTOM_X, PLATEAU_BOTTOM_Y, plateau_max_x, plateau_max_y)
 
       # The remaining items in the input list are the rover positions and their
       # controlling commands. 
@@ -50,7 +56,7 @@ module MarsRover
             end
           end
         rescue RuntimeError => e
-          puts "ERROR - Rover is off the plateau. Moving to next rover."
+          puts "ERROR - Rover is off the plateau. Moving to next rover. Error msg: #{e.message}"
           next
         end
 
