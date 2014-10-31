@@ -8,7 +8,7 @@ def run()
   options = {}
   opt_parser = OptionParser.new do |opts|
     opts.banner = "Usage: rover_controller [-h]
-     - Input is formatted as follows
+     Input is formatted as follows
      - First line is the co-ordinates of the upper-right corner of the plateau
      - Second line is the start co-ordinates of a rover with the direction it is facing
      - Third line is the list of moves for a rover
