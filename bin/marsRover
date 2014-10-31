@@ -30,6 +30,8 @@ def run()
 
   opt_parser.parse!
 
+  # parse input from stdin
+  # stop when you see a blank line
   input_list = []
   loop do 
     input = gets.strip
