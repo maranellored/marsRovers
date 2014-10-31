@@ -1,0 +1,49 @@
+#!/usr/bin/env ruby
+
+$:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+require 'optparse'
+require 'rover_controller'
+
+def run()
+  options = {}
+  opt_parser = OptionParser.new do |opts|
+    opts.banner = "Usage: rover_controller [-h]
+     - Input is formatted as follows
+     - First line is the co-ordinates of the upper-right corner of the plateau
+     - Second line is the start co-ordinates of a rover with the direction it is facing
+     - Third line is the list of moves for a rover
+     - Repeat the second and third lines multiple times for multiple rovers
+     - Input a blank line after all the rovers are input
+
+     Example input:
+     5 5
+     1 2 N
+     LMLMLMLMM
+     3 3 E
+     MMRMMRMRRM\n\n"
+
+    opts.on('-h', '--help', 'Displays this help message') do
+      puts opts
+      exit
+    end
+  end
+
+  opt_parser.parse!
+
+  input_list = []
+  loop do 
+    input = gets.strip
+    break if input.empty?
+    input_list << input
+  end
+
+  begin
+    MarsRover::RoverController.control(input_list)
+  rescue ArgumentError => e
+    puts "ERROR - #{e.message}"
+  end
+end
+
+if __FILE__ == $0
+  run()
+end

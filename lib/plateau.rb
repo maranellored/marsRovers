@@ -10,6 +10,10 @@ module MarsRover
   class Plateau
 
     def initialize(lower_x, lower_y, upper_x, upper_y)
+      if (upper_x < lower_x || upper_y < lower_y) 
+        raise ArgumentError, "The plateau co-ordinates are specified incorrectly"
+      end
+
       @bottom_left_X_pos = lower_x
       @bottom_left_Y_pos = lower_y
       @top_right_X_pos = upper_x
@@ -19,8 +23,8 @@ module MarsRover
     # validates the position of the rover w.r.t the current plateau
     def validate_position(current_x_pos, current_y_pos)
       
-      if ((@bottom_left_X_pos <= current_x_pos) && (current_x_pos <= @top_right_X_pos)) &&
-          ((@bottom_left_Y_pos <= current_y_pos) && (current_y_pos <= @top_right_Y_pos))
+      if (@bottom_left_X_pos..@top_right_X_pos).member?(current_x_pos) &&
+          (@bottom_left_Y_pos..@top_right_Y_pos).member?(current_y_pos)
         return true
       end
 
